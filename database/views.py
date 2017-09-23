@@ -9,6 +9,7 @@ from wsgiref.util import FileWrapper
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.middleware import csrf
 from django.shortcuts import render, get_object_or_404
 
 from database.forms import DBFileForm
@@ -35,6 +36,10 @@ def db_upload(request):
             db_file.author = request.user
             db_file.save()
             return HttpResponse()
+    else:
+        response = HttpResponse()
+        response.set_cookie('csrftoken', csrf.get_token(request))
+        return response
     return HttpResponseBadRequest()
 
 

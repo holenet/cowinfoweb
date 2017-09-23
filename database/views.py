@@ -36,11 +36,9 @@ def db_upload(request):
             db_file.author = request.user
             db_file.save()
             return HttpResponse()
-    else:
-        response = HttpResponse()
-        response.set_cookie('csrftoken', csrf.get_token(request))
-        return response
-    return HttpResponseBadRequest()
+    response = HttpResponse()
+    response.set_cookie('csrftoken', csrf.get_token(request))
+    return response
 
 
 @login_required

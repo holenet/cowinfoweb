@@ -6,7 +6,6 @@ from django.shortcuts import redirect, render
 def register(request):
     if request.user.is_authenticated():
         logout(request)
-        redirect('register')
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():

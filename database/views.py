@@ -22,7 +22,9 @@ def db_list(request):
     queries = []
 
     for db_file in db_files:
-        queries.append(str(db_file.uploaded_at))
+        if db_file.author==request.user:
+            queries.append(dict(name=os.path.basename(db_file.db_file.name),
+                                id=db_file.pk))
 
     return JsonResponse(queries, safe=False)
 

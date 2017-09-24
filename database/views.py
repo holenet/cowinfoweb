@@ -55,3 +55,10 @@ def db_download(request, file_id):
     response['Content-Length'] = os.stat(file_path).st_size
     response['Content-Disposition'] = 'attachment; filename=%s' % urllib.quote(file_name.encode('utf-8'))
     return response
+
+
+@login_required
+def db_delete(request, file_id):
+    db_file = get_object_or_404(DBFile, pk=file_id, author=request.user)
+    db_file.delete()
+    return HttpResponse()
